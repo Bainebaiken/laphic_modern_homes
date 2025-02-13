@@ -13,6 +13,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   String? _name;
   String? _phoneNumber;
+  String? _address; // Fixed address field
   String? _selectedService;
   DateTime? _selectedDate;
 
@@ -26,7 +27,6 @@ class _BookingScreenState extends State<BookingScreen> {
     "Furniture Works",
   ];
 
-  // Function to show the date picker
   void _pickDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -34,26 +34,25 @@ class _BookingScreenState extends State<BookingScreen> {
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
-    if (pickedDate != null && pickedDate != _selectedDate) {
+    if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;
       });
     }
   }
 
-  // Function to navigate to the payment screen
   void _proceedToPayment() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // Navigate to the payment screen
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => PaymentScreen(
             name: _name!,
             phoneNumber: _phoneNumber!,
+            address: _address!,
             selectedService: _selectedService!,
-            selectedDate: _selectedDate!, 
+            selectedDate: _selectedDate!,
           ),
         ),
       );
@@ -70,127 +69,71 @@ class _BookingScreenState extends State<BookingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Name Input Field
+
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: "Name",
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your name";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _name = value;
-                },
-              ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Adress",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your Adress";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _name = value;
-                },
+                validator: (value) => value!.isEmpty ? "Please enter your name" : null,
+                onSaved: (value) => _name = value,
               ),
               const SizedBox(height: 16.0),
 
-              // Phone Number Input Field
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Address",
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) => value!.isEmpty ? "Please enter your address" : null,
+                onSaved: (value) => _address = value, // Fixed saving address correctly
+              ),
+              const SizedBox(height: 16.0),
+
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: "Phone Number",
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your phone number";
-                  }
-                  if (value.length < 10) {
-                    return "Enter a valid phone number";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _phoneNumber = value;
-                },
+                validator: (value) => (value!.isEmpty || value.length < 10) ? "Enter a valid phone number" : null,
+                onSaved: (value) => _phoneNumber = value,
               ),
               const SizedBox(height: 16.0),
 
-              // Service Dropdown
               DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
                   labelText: "Select Service",
                   border: OutlineInputBorder(),
                 ),
-                items: _services
-                    .map(
-                      (service) => DropdownMenuItem(
-                        value: service,
-                        child: Text(service),
-                      ),
-                    )
-                    .toList(),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please select a service";
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _selectedService = value;
-                  });
-                },
+                items: _services.map((service) => DropdownMenuItem(value: service, child: Text(service))).toList(),
+                validator: (value) => value == null ? "Please select a service" : null,
+                onChanged: (value) => setState(() => _selectedService = value),
               ),
               const SizedBox(height: 16.0),
 
-              // Date Picker
               GestureDetector(
                 onTap: () => _pickDate(context),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12.0,
-                    vertical: 16.0,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Text(
-                    _selectedDate == null
-                        ? "Select Date"
-                        : "Date: ${_selectedDate!.toLocal()}".split(' ')[0],
+                    _selectedDate == null ? "Select Date" : "Date: ${_selectedDate!.toLocal()}".split(' ')[0],
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ),
               ),
               const SizedBox(height: 16.0),
-
-              // Proceed to Payment Button
               Center(
                 child: ElevatedButton(
-                  onPressed: _proceedToPayment,
+                  onPressed: _selectedDate == null ? null : _proceedToPayment, // Disable if date is missing
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32.0,
-                      vertical: 16.0,
-                    ),
-                  ),
-                  child: const Text(
-                    "Proceed to Payment",
-                    style: TextStyle(fontSize: 16.0),
-                  ),
+                    backgroundColor: Colors.orange, 
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0)),
+                  child: const Text("Proceed to  survey Payment", style: TextStyle(fontSize: 16.0)),
                 ),
               ),
             ],
@@ -201,95 +144,61 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 }
 
-class Adress {
-}
-
-// Payment Screen
 class PaymentScreen extends StatelessWidget {
   final String name;
   final String phoneNumber;
+  final String address;
   final String selectedService;
   final DateTime selectedDate;
-  
-  
-  
-  
-  const PaymentScreen({
-    super.key,
-    required this.name,
-    required this.phoneNumber,
-    
-    required this.selectedService,
-    required this.selectedDate,
-  });
+
+  const PaymentScreen({super.key, 
+  required this.name, 
+  required this.phoneNumber, 
+  required this.address,
+  required this.selectedService, 
+  required this.selectedDate});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Payment"),
-        backgroundColor: Colors.orange,
-      ),
+       title: const Text("Payment"),
+       backgroundColor: Colors.orange),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Name: $name",
-              style: const TextStyle(fontSize: 18.0),
-            ),
+            Text("Name: $name", 
+            style: const TextStyle(fontSize: 18.0)),
             const SizedBox(height: 8.0),
-            Text(
-              "Phone: $phoneNumber",
-              style: const TextStyle(fontSize: 18.0),
-            ),
-            Text(
-              "Adress: $Adress",
-              style: const TextStyle(fontSize: 18.0),
-            ),
+
+            Text("Phone: $phoneNumber", 
+            style: const TextStyle(fontSize: 18.0)),
+
+            Text("Address: $address", 
+            style: const TextStyle(fontSize: 18.0)),
             const SizedBox(height: 8.0),
-            Text(
-              "Service: $selectedService",
-              style: const TextStyle(fontSize: 18.0),
-            ),
+            Text("Service: $selectedService", 
+            style: const TextStyle(fontSize: 18.0)),
             const SizedBox(height: 8.0),
-            Text(
-              "Date: ${selectedDate.toLocal()}".split(' ')[0],
-              style: const TextStyle(fontSize: 18.0),
-            ),
+            Text("Date: ${selectedDate.toLocal()}".split(' ')[0],
+            style: const TextStyle(fontSize: 18.0)),
             const SizedBox(height: 16.0),
+            
             ElevatedButton(
-              onPressed: () {
-                // Implement payment processing logic here
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text("Payment Successful"),
-                    content: const Text("Thank you for your payment!"),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.popUntil(
-                          context,
-                          ModalRoute.withName('/'),
-                        ),
-                        child: const Text("OK"),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32.0,
-                  vertical: 16.0,
+              onPressed: () => showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Payment Successful"),
+                  content: const Text("Thank you for your payment!"),
+                  actions: [
+                    TextButton(onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')), child: const Text("OK")),
+                  ],
                 ),
               ),
-              child: const Text(
-                "Pay Now",
-                style: TextStyle(fontSize: 16.0),
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green, padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0)),
+              child: const Text("Pay Now", style: TextStyle(fontSize: 16.0)),
             ),
           ],
         ),

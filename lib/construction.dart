@@ -83,14 +83,8 @@ class ConstructionPage extends StatefulWidget {
 }
 
 class _ConstructionPageState extends State<ConstructionPage> {
-  int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    // Handle navigation logic here
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -201,27 +195,7 @@ class _ConstructionPageState extends State<ConstructionPage> {
         ),
       ),
 
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-      ),
+      
     );
   }
 }

@@ -85,7 +85,7 @@ class _GypsumWorksScreenState extends State<GypsumWorksScreen> {
                           ),
                           child: Image.asset(
                             design['image']!,
-                            height: 120,
+                            height: 250,
                             fit: BoxFit.cover,
                           ),
                         ),

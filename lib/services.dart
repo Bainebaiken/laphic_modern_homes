@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:laphic_app/booking.dart';
+import 'package:laphic_app/compound_design.dart';
+import 'package:laphic_app/construction.dart';
 import 'package:laphic_app/feedback.dart';
 import 'package:laphic_app/funitures_designs.dart';
 import 'package:laphic_app/gypsum_works.dart';
@@ -22,7 +24,7 @@ class _ServicesPageState extends State<ServicesPage> {
   // List of pages for the BottomNavigationBar
   late List<Widget> _pages;
 
-  final List<String> _pageTitles = ["Feedback", "Services", "Projects", "Booking"];
+  final List<String> _pageTitles = ["Feedback", "Services", "Projects", "Booking",];
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _ServicesPageState extends State<ServicesPage> {
       _buildServicesContent(), // Correctly use the instance method here
       const OngoingProjects(),
       const BookingScreen(),
+    
     ];
   }
 
@@ -73,6 +76,7 @@ class _ServicesPageState extends State<ServicesPage> {
             icon: Icon(Icons.book_online),
             label: "Booking",
           ),
+          
         ],
       ),
     );
@@ -103,7 +107,7 @@ class _ServicesPageState extends State<ServicesPage> {
                 child: Text(
                   'Services',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 213, 214, 219),
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
@@ -187,12 +191,12 @@ class _ServicesPageState extends State<ServicesPage> {
     {
       "title": "Compound Design",
       "image": "assets/compound 1.jpg",
-      "page": const FeedbackInquiryScreen(), // Replace with actual pages
+      "page": const CompoundDesignPage(), // Replace with actual pages
     },
     {
       "title": "Construction",
       "image": "assets/SWIUXEXDJDK.jpg",
-      "page": const OngoingProjects(),
+      "page": const ConstructionPage(),
     },
     {
       "title": "Painting",
@@ -221,6 +225,9 @@ class _ServicesPageState extends State<ServicesPage> {
     },
   ];
 }
+
+
+
 
 
 

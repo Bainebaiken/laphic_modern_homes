@@ -82,15 +82,8 @@ class CompoundDesignPage extends StatefulWidget {
 }
 
 class _CompoundDesignPageState extends State<CompoundDesignPage> {
-  int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    // Handle navigation logic here
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,7 +155,7 @@ class _CompoundDesignPageState extends State<CompoundDesignPage> {
                           ),
                           child: Image.asset(
                             design['image']!,
-                            height: 120,
+                            height: 300,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -198,28 +191,6 @@ class _CompoundDesignPageState extends State<CompoundDesignPage> {
             ),
           ],
         ),
-      ),
-
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
       ),
     );
   }

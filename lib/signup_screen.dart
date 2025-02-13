@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:laphic_app/login_screen.dart';
-
+import 'package:laphic_app/termsandconditions.dart'; // Ensure this path is correct
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  @override
+  @override   
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -48,13 +48,12 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   // Subtitle
                   const Text(
-                    "Looks like you don't have an account.\nLet's create a new account for",
+                    "Looks like you don't have an account.\nLet's create a new account for you.",
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
                     ),
                   ),
-                  const SizedBox(height: 8),
                   const SizedBox(height: 20),
                   // Email field
                   TextField(
@@ -86,20 +85,40 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  // Terms and Privacy Policy
+                  // Terms and Privacy Policy with clickable text
                   RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       text: "By selecting Agree and continue below,\nI agree to ",
-                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                      style: const TextStyle(color: Colors.white70, fontSize: 14),
                       children: [
-                        TextSpan(
-                          text: "Terms of Service ",
-                          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const TermsAndPrivacyScreen()),
+                              );
+                            },
+                            child: const Text(
+                              "Terms of Service ",
+                              style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
-                        TextSpan(text: "and "),
-                        TextSpan(
-                          text: "Privacy Policy",
-                          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                        const TextSpan(text: "and "),
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const TermsAndPrivacyScreen()),
+                              );
+                            },
+                            child: const Text(
+                              "Privacy Policy",
+                              style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -140,6 +159,7 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
+
 
 
 
