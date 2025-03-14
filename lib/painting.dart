@@ -18,7 +18,7 @@ class _PaintingPageState extends State<PaintingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        // backgroundColor: Colors.grey[300],
         title: const Text(
           'painting ',
           style: TextStyle(color: Colors.black),

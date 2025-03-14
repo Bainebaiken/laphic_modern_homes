@@ -18,7 +18,7 @@ class _GypsumWorksScreenState extends State<GypsumWorksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        // backgroundColor: Colors.grey[300],
         title: const Text(
           'Gypsum Works',
           style: TextStyle(color: Colors.black),

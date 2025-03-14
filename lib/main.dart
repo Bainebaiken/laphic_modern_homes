@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+// import 'package:laphic_app/booking.dart';
+// import 'package:laphic_app/admindashboard.dart';
 import 'package:laphic_app/first_screen.dart';
+
 // import 'package:laphic_app/inspiration_design.dart';
 // import 'package:laphic_app/construction.dart';
 // import 'package:laphic_app/gypsum_works.dart';
@@ -22,11 +25,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'LAPHIC Modern Homes',
       home: FirstSplashScreen(),
-      // home: SecondScreen(),
-      // home: ThirdScreen(),
-      // home: ServicesPage(),
-      // home: ConstructionPage(),
-      // home: InspirationHall(),
+      // home: BookingScreen(),
+      // home: DashboardScreen(),
     );
   }
 }

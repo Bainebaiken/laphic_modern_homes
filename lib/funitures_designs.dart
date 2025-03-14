@@ -96,7 +96,7 @@ class _FunitureDesignScreenState extends State<FunitureDesignScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        // backgroundColor: Colors.grey[300],
         title: const Text(
           'construction Works',
           style: TextStyle(color: Colors.black),

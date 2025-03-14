@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:laphic_app/services.dart';
 import 'package:laphic_app/signup_screen.dart';
 
-
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -23,7 +21,7 @@ class LoginScreen extends StatelessWidget {
           ),
           // Black overlay for dimming the background
           Container(
-            color: Colors.black.withOpacity(0.5),
+            color: const Color.fromARGB(255, 53, 53, 57).withOpacity(0.5),
           ),
           // Login form
           Center(
@@ -31,7 +29,7 @@ class LoginScreen extends StatelessWidget {
               margin: const EdgeInsets.all(20.0),
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.8),
+                color: const Color.fromARGB(255, 11, 9, 45).withOpacity(0.8),
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Column(
@@ -55,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                       labelText: "Email",
                       labelStyle: const TextStyle(color: Colors.white70),
                       filled: true,
-                      fillColor: Colors.black.withOpacity(0.5),
+                      fillColor: const Color.fromARGB(255, 13, 14, 14).withOpacity(0.5),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -71,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                       labelStyle: const TextStyle(color: Colors.white70),
                       suffixIcon: const Icon(Icons.visibility, color: Colors.white70),
                       filled: true,
-                      fillColor: Colors.black.withOpacity(0.5),
+                      fillColor: const Color.fromARGB(74, 75, 66, 66).withOpacity(0.5),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -87,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                       },
                       child: const Text(
                         "Forgot Password?",
-                        style: TextStyle(color: Colors.green),
+                        style: TextStyle(color: Color.fromARGB(255, 7, 18, 38)), // Navy Blue
                       ),
                     ),
                   ),
@@ -97,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: const Color(0xFFF5A623), // Gold/Yellow
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -135,7 +133,7 @@ class LoginScreen extends StatelessWidget {
                         },
                         child: const Text(
                           "Sign up",
-                          style: TextStyle(color: Colors.green),
+                          style: TextStyle(color: Color.fromARGB(255, 11, 31, 66)), // Navy Blue
                         ),
                       ),
                     ],
@@ -150,45 +148,16 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-// class SignUpScreen extends StatelessWidget {
-//   const SignUpScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Sign Up')),
-//       body: Center(
-//         child: const Text('Sign Up Screen Content Goes Here'),
-//       ),
-//     );
-//   }
-// }
-
-
-
 
 
 
 
 
 // import 'package:flutter/material.dart';
+// import 'package:laphic_app/services.dart';
 // import 'package:laphic_app/signup_screen.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: LoginScreen(),
-//     );
-//   }
-// }
 
 // class LoginScreen extends StatelessWidget {
 //   const LoginScreen({super.key});
@@ -217,7 +186,7 @@ class LoginScreen extends StatelessWidget {
 //               margin: const EdgeInsets.all(20.0),
 //               padding: const EdgeInsets.all(20.0),
 //               decoration: BoxDecoration(
-//                 color: Colors.black.withOpacity(0.8),
+//                 color: const Color.fromARGB(255, 46, 45, 45).withOpacity(0.8),
 //                 borderRadius: BorderRadius.circular(15.0),
 //               ),
 //               child: Column(
@@ -257,7 +226,7 @@ class LoginScreen extends StatelessWidget {
 //                       labelStyle: const TextStyle(color: Colors.white70),
 //                       suffixIcon: const Icon(Icons.visibility, color: Colors.white70),
 //                       filled: true,
-//                       fillColor: Colors.black.withOpacity(0.5),
+//                       fillColor: const Color.fromARGB(74, 75, 66, 66).withOpacity(0.5),
 //                       border: OutlineInputBorder(
 //                         borderRadius: BorderRadius.circular(10.0),
 //                       ),
@@ -273,7 +242,7 @@ class LoginScreen extends StatelessWidget {
 //                       },
 //                       child: const Text(
 //                         "Forgot Password?",
-//                         style: TextStyle(color: Colors.green),
+//                         style: TextStyle(color: Color.fromARGB(255, 9, 23, 70)),
 //                       ),
 //                     ),
 //                   ),
@@ -283,14 +252,18 @@ class LoginScreen extends StatelessWidget {
 //                     width: double.infinity,
 //                     child: ElevatedButton(
 //                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: Colors.green,
+//                         backgroundColor: const Color.fromARGB(255, 152, 110, 19),
 //                         padding: const EdgeInsets.symmetric(vertical: 15),
 //                         shape: RoundedRectangleBorder(
 //                           borderRadius: BorderRadius.circular(10.0),
 //                         ),
 //                       ),
 //                       onPressed: () {
-//                         // Handle Login action
+//                         // Navigate to ServicesPage after login
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(builder: (context) => const ServicesPage()),
+//                         );
 //                       },
 //                       child: const Text(
 //                         "Login",
@@ -309,18 +282,15 @@ class LoginScreen extends StatelessWidget {
 //                       ),
 //                       TextButton(
 //                         onPressed: () {
-        
 //                           // Navigate to SignupScreen
 //                           Navigator.push(
 //                             context,
 //                             MaterialPageRoute(builder: (context) => const SignUpScreen()),
 //                           );
 //                         },
-//                           // Handle Sign Up navigation
-                        
 //                         child: const Text(
 //                           "Sign up",
-//                           style: TextStyle(color: Colors.green),
+//                           style: TextStyle(color: Color.fromARGB(255, 22, 15, 83)),
 //                         ),
 //                       ),
 //                     ],
@@ -335,6 +305,3 @@ class LoginScreen extends StatelessWidget {
 //   }
 // }
 
-// class SignupScreen {
-//   const SignupScreen();
-// }
