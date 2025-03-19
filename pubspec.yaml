@@ -45,6 +45,7 @@ dependencies:
   
   geolocator: ^13.0.2
   intl: ^0.20.2
+  http: ^1.3.0
   
   
 dev_dependencies:
@@ -90,6 +91,9 @@ flutter:
     - assets/gypsum6.webp
     - assets/bed.jpg
     - assets/location.JPG
+    - assets/hommie.jpg
+    - assets/kit.jpg
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
