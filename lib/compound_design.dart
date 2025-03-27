@@ -11,7 +11,7 @@ import 'package:laphic_app/services.dart';
 
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen({Key? key}) : super(key: key); 
 
   @override
   // ignore: library_private_types_in_public_api
@@ -24,10 +24,10 @@ class _MainScreenState extends State<MainScreen> {
   // List of screens for navigation
   final List<Widget> _pages = [
     const FeedbackInquiryScreen(),
-    const ServicesPage(),
+    const ServicesPage(token: '',),
     const OngoingProjects(),
     const GypsumWorksScreen(),
-    const FunitureDesignScreen(),
+    const FurnitureDesignScreen(),
     const ConstructionPage(),
     const CompoundDesignPage(),
     const InteriorGalleryScreen(),
@@ -75,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
 
 
 class CompoundDesignPage extends StatefulWidget {
-  const CompoundDesignPage({super.key});
+  const CompoundDesignPage({Key? key}) : super(key: key); 
 
   @override
   State<CompoundDesignPage> createState() => _CompoundDesignPageState();
@@ -142,7 +142,7 @@ class _CompoundDesignPageState extends State<CompoundDesignPage> {
                   final design = gypsumDesigns[index];
                   return Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     elevation: 4,
                     child: Column(
@@ -155,7 +155,7 @@ class _CompoundDesignPageState extends State<CompoundDesignPage> {
                           ),
                           child: Image.asset(
                             design['image']!,
-                            height: 300,
+                            height: 200,
                             fit: BoxFit.cover,
                           ),
                         ),

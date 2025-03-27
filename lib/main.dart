@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'package:laphic_app/booking.dart';
 // import 'package:laphic_app/admindashboard.dart';
-import 'package:laphic_app/first_screen.dart';
+// import 'package:laphic_app/first_screen.dart';
+import 'package:laphic_app/services.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 
 // import 'package:laphic_app/inspiration_design.dart';
 // import 'package:laphic_app/construction.dart';
@@ -17,14 +19,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'LAPHIC Modern Homes',
-      home: FirstSplashScreen(),
+      // home: FirstSplashScreen(),
+      home: ServicesPage(token: '',),
       // home: BookingScreen(),
       // home: DashboardScreen(),
     );

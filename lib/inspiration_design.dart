@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 
 class InspirationHall extends StatelessWidget {
-  const InspirationHall({super.key});
+  const InspirationHall({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

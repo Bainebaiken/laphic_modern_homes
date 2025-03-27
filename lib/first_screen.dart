@@ -74,7 +74,7 @@ import 'package:flutter/material.dart';
 import 'second_screen.dart';
 
 class FirstSplashScreen extends StatefulWidget {
-  const FirstSplashScreen({super.key});
+  const FirstSplashScreen({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api

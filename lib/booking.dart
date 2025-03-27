@@ -140,8 +140,7 @@ import 'package:intl/intl.dart';
 import 'payment_screen.dart';
 
 class BookingScreen extends StatefulWidget {
-  const BookingScreen({super.key});
-
+  const BookingScreen({Key? key}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
   _BookingScreenState createState() => _BookingScreenState();
