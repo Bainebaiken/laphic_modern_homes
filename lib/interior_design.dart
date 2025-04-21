@@ -429,10 +429,8 @@
 //   },
 // ];
 
-import 'package:flutter/foundation.dart' show kDebugMode; // For debug logging
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart' hide CarouselController;
 
 class InteriorGalleryScreen extends StatelessWidget {
   const InteriorGalleryScreen({Key? key}) : super(key: key);
@@ -443,75 +441,22 @@ class InteriorGalleryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Interior Gallery'),
         centerTitle: true,
-        backgroundColor: Colors.orange, // Matches your app's branding
+        backgroundColor: Colors.orange,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Carousel Section
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 180,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  enlargeCenterPage: true,
-                  viewportFraction: 0.9,
-                  aspectRatio: 16 / 9,
+            // Static Header Image
+            Container(
+              margin: const EdgeInsets.all(10),
+              height: 180,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                  image: AssetImage('assets/interior3.jpeg'), // Default image, adjust as needed
+                  fit: BoxFit.cover,
                 ),
-                items: carouselImages.map((item) {
-                  final String image = item['image'] ?? 'assets/interior3.jpeg'; // Fallback image
-                  final String title = item['title'] ?? 'Untitled Design'; // Fallback title
-
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                image,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                                errorBuilder: (context, error, stackTrace) {
-                                  if (kDebugMode) print('Failed to load carousel image: $image, error: $error');
-                                  return const Center(child: Icon(Icons.error));
-                                },
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 10,
-                              left: 10,
-                              child: Text(
-                                title,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 5.0,
-                                      color: Colors.black,
-                                      offset: Offset(2.0, 2.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
               ),
             ),
             // Title Section
@@ -525,7 +470,7 @@ class InteriorGalleryScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Grid of Designs
+            // Grid of Interior Designs
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GridView.builder(
@@ -541,7 +486,7 @@ class InteriorGalleryScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final design = designs[index];
                   final String image = design['image'] ?? 'assets/interior3.jpeg';
-                  final String title = design['title'] ?? 'Unknown Design';
+                  final String title = design['title'] ?? 'Untitled Design';
                   final String price = design['price'] ?? 'N/A';
 
                   return Card(
@@ -559,7 +504,7 @@ class InteriorGalleryScreen extends StatelessWidget {
                             height: 120,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              if (kDebugMode) print('Failed to load grid image: $image, error: $error');
+                              if (kDebugMode) print('Failed to load image: $image, error: $error');
                               return const Center(child: Icon(Icons.error));
                             },
                           ),
@@ -600,16 +545,6 @@ class InteriorGalleryScreen extends StatelessWidget {
   }
 }
 
-// Carousel Data with Local Assets
-final List<Map<String, String>> carouselImages = [
-  {"title": "Modern Living", "image": "assets/gypsum6.webp"},
-  {"title": "Cozy Bedroom", "image": "assets/kit.jpg"},
-  {"title": "Luxury Kitchen", "image": "assets/gypsum6.webp"},
-  {"title": "Minimalist Office", "image": "assets/interior7.jpeg"},
-  {"title": "Elegant Space", "image": "assets/interior3.jpeg"}, // Added title
-];
-
-// Interior Design Data for Grid
 final List<Map<String, String>> designs = [
   {"title": "Affordable", "price": "8,000,000 UGX", "image": "assets/interior3.jpeg"},
   {"title": "Shining Theme", "price": "6,000,000 UGX", "image": "assets/interior3.jpeg"},
@@ -619,3 +554,5 @@ final List<Map<String, String>> designs = [
   {"title": "Humble Theme", "price": "9,000,000 UGX", "image": "assets/interior3.jpeg"},
   {"title": "Gold Design", "price": "12,000,000 UGX", "image": "assets/interior3.jpeg"},
 ];
+
+// Removed carouselImages since it's no longer needed

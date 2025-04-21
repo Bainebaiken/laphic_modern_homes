@@ -114,7 +114,7 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
               children: [
                 Image.asset(
                   'assets/sharif-removebg-preview.png', // Logo Image
-                  height: 100,
+                  height: 200, // Increased from 100 to 200 for better visibility
                 ),
                 const SizedBox(height: 15),
                 const Text(

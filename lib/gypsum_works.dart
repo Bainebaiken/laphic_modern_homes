@@ -236,12 +236,11 @@
 
 
 import 'dart:async';
-import 'package:flutter/foundation.dart' show kDebugMode; // For debug logging
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' hide CarouselController;
 
 class GypsumWorksScreen extends StatefulWidget {
-  const GypsumWorksScreen({Key? key}) : super(key: key); // Updated from super.key
+  const GypsumWorksScreen({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -256,7 +255,7 @@ class _GypsumWorksScreenState extends State<GypsumWorksScreen> {
   final List<String> carouselImages = [
     'assets/gypsum6.webp',
     'assets/interior7.jpeg',
-    'assets/kit.jpg', // Add more gypsum-related images from your assets
+    'assets/kit.jpg',
   ];
 
   @override
@@ -300,15 +299,13 @@ class _GypsumWorksScreenState extends State<GypsumWorksScreen> {
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.orange, // Matches your app's branding
+        backgroundColor: Colors.orange,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Carousel Section
             _buildCarousel(),
-            // Title Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Text(
@@ -319,7 +316,6 @@ class _GypsumWorksScreenState extends State<GypsumWorksScreen> {
                 ),
               ),
             ),
-            // Grid of Gypsum Designs
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GridView.builder(
@@ -350,7 +346,7 @@ class _GypsumWorksScreenState extends State<GypsumWorksScreen> {
                           borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
                           child: Image.asset(
                             image,
-                            height: 120, // Reduced from 250 to fit aspect ratio
+                            height: 120,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
                               if (kDebugMode) print('Failed to load image: $image, error: $error');
@@ -447,7 +443,6 @@ class _GypsumWorksScreenState extends State<GypsumWorksScreen> {
   }
 }
 
-// Gypsum Designs Data (Reduced Duplicates)
 final List<Map<String, String>> gypsumDesigns = [
   {"title": "Simple & Affordable", "price": "500,000 UGX", "image": "assets/gypsum6.webp"},
   {"title": "Grey Lights", "price": "400,000 UGX", "image": "assets/gypsum6.webp"},
