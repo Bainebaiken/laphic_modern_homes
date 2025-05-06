@@ -1,11 +1,8 @@
+// below is the code screen for insipiration bt i hoped it cud not be neccessary 
+
+
+
 import 'package:flutter/material.dart';
-
-
-
-
-
-
-
 
 
 class InspirationHall extends StatelessWidget {

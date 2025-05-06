@@ -68,6 +68,7 @@
 // }
 
 
+//  below is the ccode for the splashscreen 
 
 import 'dart:async';
 import 'package:flutter/material.dart';

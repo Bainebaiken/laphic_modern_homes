@@ -1,4 +1,4 @@
-
+// below is the code for terms and conditions  wic is linked to the login screen 
 
 
 import 'package:flutter/material.dart';

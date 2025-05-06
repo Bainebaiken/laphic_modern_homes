@@ -31,7 +31,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final _formKey = GlobalKey<FormState>();
   String _paymentMethod = 'Credit Card';
   bool _isProcessingPayment = false;
-  bool _showMobileMoneyFields = false;
 
   final TextEditingController _cardNumberController = TextEditingController();
   final TextEditingController _expiryDateController = TextEditingController();
@@ -267,7 +266,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       if (value != null) {
                         setState(() {
                           _paymentMethod = value;
-                          _showMobileMoneyFields = value == 'Mobile Money';
                         });
                       }
                     },
@@ -310,3 +308,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
+
+
+

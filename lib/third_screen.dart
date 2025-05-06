@@ -297,7 +297,7 @@ class ThirdScreen extends StatelessWidget {
         }
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ServicesPage(token: idToken ?? '')),
+          MaterialPageRoute(builder: (context) => ServicesHomePage()),
         );
       } else {
         if (kDebugMode) print('Authentication returned null');

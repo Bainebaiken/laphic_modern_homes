@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "528777391195",
+    "project_id": "laphic-app-modern-homes",
+    "storage_bucket": "laphic-app-modern-homes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528777391195:android:b8ffa6d821f75cb22ae37e",
+        "android_client_info": {
+          "package_name": "com.example.laphic_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBloBxKH3-tcdCVO5EM0PukSnkglEIDrmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
