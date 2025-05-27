@@ -84,7 +84,7 @@ class ServiceDetailPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const BookingScreen()),
+                    MaterialPageRoute(builder: (_) => const BookingScreen(initialDesign: '', initialServiceType: '',)),
                   );
                 },
                 icon: const Icon(Icons.book),

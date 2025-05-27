@@ -1,25 +1,33 @@
-import 'package:flutter/foundation.dart' show kDebugMode; // For debug logging
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'package:laphic_app/sucess_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
   final String name;
   final String phoneNumber;
   final String address;
-  final String selectedService;
+  final String selectedServiceType;
+  final String selectedServicePackage;
   final DateTime selectedDate;
+  final TimeOfDay selectedTime;
   final double distance;
   final double cost;
+  final String paymentMethod;
 
   const PaymentScreen({
-    Key? key, // Updated from super.key
+    Key? key,
     required this.name,
     required this.phoneNumber,
     required this.address,
-    required this.selectedService,
+    required this.selectedServiceType,
+    required this.selectedServicePackage,
     required this.selectedDate,
+    required this.selectedTime,
     required this.distance,
-    required this.cost, required String selectedServiceType, required String selectedServicePackage,
+    required this.cost,
+    required this.paymentMethod,
   }) : super(key: key);
 
   @override
@@ -50,6 +58,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     _reference = "SURVEY-${DateTime.now().millisecondsSinceEpoch}";
+    _paymentMethod = widget.paymentMethod; // Initialize with passed payment method
     if (kDebugMode) print('PaymentScreen initialized with reference: $_reference');
   }
 
@@ -102,7 +111,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                "A survey agent will visit your location on ${DateFormat('EEEE, MMMM d, yyyy').format(widget.selectedDate)} at ${DateFormat('h:mm a').format(widget.selectedDate)}",
+                "A survey agent will visit your location on ${DateFormat('EEEE, MMMM d, yyyy').format(widget.selectedDate)} at ${widget.selectedTime.format(context)}",
                 textAlign: TextAlign.center,
               ),
             ],
@@ -112,7 +121,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PaymentSuccessScreen()),
+                );
               },
             ),
           ],
@@ -190,7 +202,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               const SizedBox(height: 10),
               const Text("Bank Name: Laphic Bank"),
               const Text("Account Name: Laphic Modern Homes Ltd"),
-              const Text("Account Number: 1234567890"),
+              const Text("Account Number: 0705029291"),
               const Text("Branch: Main Branch"),
               Text("Reference: $_reference"),
               const SizedBox(height: 10),
@@ -237,11 +249,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     children: [
                       _buildSummaryRow("Name", widget.name),
                       _buildSummaryRow("Phone", widget.phoneNumber),
-                      _buildSummaryRow("Service", widget.selectedService),
+                      _buildSummaryRow("Service", "${widget.selectedServiceType} - ${widget.selectedServicePackage}"),
                       _buildSummaryRow("Address", widget.address),
                       _buildSummaryRow(
                         "Appointment",
-                        "${DateFormat('EEE, MMM d, yyyy').format(widget.selectedDate)} at ${DateFormat('h:mm a').format(widget.selectedDate)}",
+                        "${DateFormat('EEE, MMM d, yyyy').format(widget.selectedDate)} at ${widget.selectedTime.format(context)}",
                       ),
                       _buildSummaryRow("Distance", "${widget.distance} km"),
                       _buildSummaryRow("Amount", "\$${widget.cost.toStringAsFixed(2)}"),
@@ -308,6 +320,3 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
-
-
-

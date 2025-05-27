@@ -2,12 +2,10 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:laphic_app/booking.dart';
 import 'package:laphic_app/feedback.dart';
-import 'package:laphic_app/interior_design.dart';
-
 import 'package:laphic_app/livechat.dart';
-import 'package:laphic_app/metal_fabrication.dart';
 import 'package:laphic_app/profile_screen.dart';
 import 'package:laphic_app/projects_designn.dart';
+import 'package:laphic_app/services.dart';
 
 
 class InteriorDetailsScreen extends StatelessWidget {
@@ -20,24 +18,24 @@ class InteriorDetailsScreen extends StatelessWidget {
     Widget nextScreen;
     switch (index) {
       case 0:
-        nextScreen = const MetalFabricationPage();
-        break;
-      case 1:
-        nextScreen = const InteriorGalleryScreen();
-        break;
-      case 2:
-        nextScreen = const BookingScreen();
-        break;
-      case 3:
         nextScreen = const ProfilePage();
         break;
-      case 4:
-        nextScreen = const ChatPage();
+      case 1:
+        nextScreen = const ServicesHomePage();
         break;
-      case 5:
+      
+      case 2:
         nextScreen = const OngoingProjects();
         break;
-      case 6:
+      case 3:
+        nextScreen = const ChatPage();
+        break;
+          
+      case 4:
+        nextScreen = const BookingScreen(initialDesign: '', initialServiceType: '',);
+        break;
+        
+      case 5:
         nextScreen = const FeedbackInquiryScreen();
         break;
       default:
@@ -205,14 +203,13 @@ class InteriorDetailsScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.construction), label: 'Metal Works'),
-            BottomNavigationBarItem(icon: Icon(Icons.palette), label: 'Interior'),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Booking'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Projects'),
-            BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
-          ],
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Services'),
+          BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Projects'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
+        ],
         ),
       ),
     );

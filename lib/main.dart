@@ -116,11 +116,10 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:laphic_app/first_screen.dart';
+import 'package:laphic_app/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:file_picker/file_picker.dart';
 import 'admindashboard.dart';
 import 'firebase_options.dart';
 
@@ -176,7 +175,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const FirstSplashScreen(),
+        home: const ServicesHomePage(),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -242,6 +241,10 @@ class AuthProvider with ChangeNotifier {
   bool get isAuthenticated => _token != null && _userType != null && ['admin', 'super_admin', 'provider'].contains(_userType);
   bool get isLoading => _isLoading;
   String? get error => _error;
+
+  get userEmail => null;
+
+  get email => null;
 
   Future<void> init() async {
     try {

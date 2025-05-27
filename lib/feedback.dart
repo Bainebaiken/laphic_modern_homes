@@ -1,638 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:laphic_app/booking.dart';
-
-// import 'package:laphic_app/projects_designn.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:laphic_app/services.dart';
-
-
-// class MainScreen extends StatefulWidget {
-//   const MainScreen({super.key});
-
-//   @override
-//   // ignore: library_private_types_in_public_api
-//   _MainScreenState createState() => _MainScreenState();
-// }
-
-// class _MainScreenState extends State<MainScreen> {
-//   int _selectedIndex = 0;
-//   final storage = const FlutterSecureStorage();
-//   String? token;
-//   bool _isLoading = true;
-
-//   // List of screens for navigation
-//   late List<Widget> _pages;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadToken();
-//   }
-
-//   // Load token from secure storage
-//   Future<void> _loadToken() async {
-//     // Try to get token from secure storage
-//     token = await storage.read(key: 'auth_token');
-    
-//     // Initialize pages after getting token
-//     setState(() {
-//       _pages = [
-//         const FeedbackInquiryScreen(),
-//         ServicesPage(token: token ?? ''), // Provide token or empty string if null
-//         const OngoingProjects(),
-//         const BookingScreen(),
-//       ];
-//       _isLoading = false;
-//     });
-//   }
-
-//   void _onItemTapped(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // Show loading indicator while token is being loaded
-//     if (_isLoading) {
-//       return const Scaffold(
-//         body: Center(
-//           child: CircularProgressIndicator(
-//             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-//           ),
-//         ),
-//       );
-//     }
-
-//     return Scaffold(
-//       body: _pages[_selectedIndex],
-//       bottomNavigationBar: BottomNavigationBar(
-//         type: BottomNavigationBarType.fixed, // Important for more than 3 items
-//         currentIndex: _selectedIndex,
-//         onTap: _onItemTapped,
-//         selectedItemColor: Colors.orange,
-//         unselectedItemColor: Colors.grey,
-//         items: const [
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.feedback),
-//             label: "Feedback",
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.home_repair_service),
-//             label: "Services",
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.construction),
-//             label: "Projects",
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.book_online),
-//             label: "Booking",
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-// class FeedbackInquiryScreen extends StatefulWidget {
-//   const FeedbackInquiryScreen({Key? key}) : super(key: key);
-
-//   @override
-//   // ignore: library_private_types_in_public_api
-//   _FeedbackInquiryScreenState createState() => _FeedbackInquiryScreenState();
-// }
-
-// class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
-//   final TextEditingController _nameController = TextEditingController();
-//   final TextEditingController _commentsController = TextEditingController();
-//   int _rating = 0;
-
-//   @override
-//   void dispose() {
-//     _nameController.dispose();
-//     _commentsController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Contact & Feedback'),
-//         backgroundColor: Colors.orange,
-//       ),
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               // Map Section
-//               Container(
-//                 height: 200,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(10),
-//                   image: const DecorationImage(
-//                     image: AssetImage('assets/location.JPG'),
-//                     fit: BoxFit.cover,
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(height: 10),
-
-//               // Contact Information
-//               const Row(
-//                 children: [
-//                   Icon(Icons.location_pin, color: Colors.red),
-//                   SizedBox(width: 8),
-//                   Expanded(
-//                     child: Text(
-//                       'Kitende, Entebbe Road, Kampala, Uganda',
-//                       style: TextStyle(fontSize: 16),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 10),
-//               const Row(
-//                 children: [
-//                   Icon(Icons.phone, color: Colors.green),
-//                   SizedBox(width: 8),
-//                   Text(
-//                     '+256 705029291',
-//                     style: TextStyle(fontSize: 16),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 10),
-//               const Row(
-//                 children: [
-//                   Icon(Icons.email, color: Colors.blue),
-//                   SizedBox(width: 8),
-//                   Text(
-//                     'laphicmodernhomes@gmail.com',
-//                     style: TextStyle(fontSize: 16),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 20),
-
-//               // Inquiry / Feedback Title
-//               const Text(
-//                 'Inquiry / Feedback',
-//                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//               ),
-//               const SizedBox(height: 10),
-
-//               // Name Field
-//               TextField(
-//                 controller: _nameController,
-//                 decoration: const InputDecoration(
-//                   labelText: 'Name',
-//                   border: OutlineInputBorder(),
-//                 ),
-//               ),
-//               const SizedBox(height: 10),
-
-//               // Comments Field
-//               TextField(
-//                 controller: _commentsController,
-//                 maxLines: 4,
-//                 decoration: const InputDecoration(
-//                   labelText: 'Comments',
-//                   border: OutlineInputBorder(),
-//                 ),
-//               ),
-//               const SizedBox(height: 20),
-
-//               // Rate Us Section
-//               const Text(
-//                 'Rate us:',
-//                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-//               ),
-//               const SizedBox(height: 10),
-//               Row(
-//                 children: List.generate(5, (index) {
-//                   return IconButton(
-//                     icon: Icon(
-//                       index < _rating ? Icons.star : Icons.star_border,
-//                       color: Colors.orange,
-//                       size: 30,
-//                     ),
-//                     onPressed: () {
-//                       setState(() {
-//                         _rating = index + 1;
-//                       });
-//                     },
-//                   );
-//                 }),
-//               ),
-//               const SizedBox(height: 20),
-
-//               // Submit Button
-//               SizedBox(
-//                 width: double.infinity,
-//                 child: ElevatedButton(
-//                   onPressed: () {
-//                     // Validate inputs
-//                     if (_nameController.text.isEmpty || _commentsController.text.isEmpty) {
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         const SnackBar(content: Text('Please fill in all fields')),
-//                       );
-//                       return;
-//                     }
-                    
-//                     // Submit feedback
-//                     ScaffoldMessenger.of(context).showSnackBar(
-//                       const SnackBar(content: Text('Feedback submitted successfully!')),
-//                     );
-                    
-//                     // Clear form
-//                     _nameController.clear();
-//                     _commentsController.clear();
-//                     setState(() {
-//                       _rating = 0;
-//                     });
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.orange,
-//                     padding: const EdgeInsets.symmetric(vertical: 15),
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(10),
-//                     ),
-//                   ),
-//                   child: const Text(
-//                     'Submit',
-//                     style: TextStyle(fontSize: 16, color: Colors.white),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// import 'dart:async';
-// import 'package:flutter/foundation.dart' show kDebugMode;
-// import 'package:flutter/material.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:laphic_app/booking.dart';
-// import 'package:laphic_app/projects_designn.dart';
-// import 'package:laphic_app/services.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-// class MainScreen extends StatefulWidget {
-//   const MainScreen({Key? key}) : super(key: key);
-
-//   @override
-//   // ignore: library_private_types_in_public_api
-//   _MainScreenState createState() => _MainScreenState();
-// }
-
-// class _MainScreenState extends State<MainScreen> {
-//   int _selectedIndex = 0;
-//   final storage = const FlutterSecureStorage();
-//   String? token;
-//   bool _isLoading = true;
-
-//   List<Widget> _pages = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadToken();
-//   }
-
-//   Future<void> _loadToken() async {
-//     setState(() => _isLoading = true);
-//     token = await storage.read(key: 'auth_token');
-//     if (kDebugMode) print('Token loaded: $token');
-
-//     setState(() {
-//       _pages = [
-//         const FeedbackInquiryScreen(),
-//         ServicesPage(token: token ?? ''),
-//         const OngoingProjects(),
-//         const BookingScreen(),
-//       ];
-//       _isLoading = false;
-//     });
-
-//     if (token == null && mounted) {
-//       Navigator.of(context).pushReplacementNamed('/login');
-//     }
-//   }
-
-//   void _onItemTapped(int index) {
-//     setState(() => _selectedIndex = index);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (_isLoading) {
-//       return const Scaffold(
-//         body: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.orange))),
-//       );
-//     }
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Laphic App', style: TextStyle(color: Colors.white)),
-//         centerTitle: true,
-//         backgroundColor: Colors.orange,
-//         elevation: 0,
-//       ),
-//       body: _pages[_selectedIndex],
-//       bottomNavigationBar: BottomNavigationBar(
-//         type: BottomNavigationBarType.fixed,
-//         currentIndex: _selectedIndex,
-//         onTap: _onItemTapped,
-//         selectedItemColor: Colors.orange,
-//         unselectedItemColor: Colors.grey,
-//         backgroundColor: const Color.fromARGB(255, 3, 7, 24),
-//         items: const [
-//           BottomNavigationBarItem(icon: Icon(Icons.feedback), label: "Feedback"),
-//           BottomNavigationBarItem(icon: Icon(Icons.home_repair_service), label: "Services"),
-//           BottomNavigationBarItem(icon: Icon(Icons.construction), label: "Projects"),
-//           BottomNavigationBarItem(icon: Icon(Icons.book_online), label: "Booking"),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-// class FeedbackInquiryScreen extends StatefulWidget {
-//   const FeedbackInquiryScreen({Key? key}) : super(key: key);
-
-//   @override
-//   // ignore: library_private_types_in_public_api
-//   _FeedbackInquiryScreenState createState() => _FeedbackInquiryScreenState();
-// }
-
-// class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
-//   final TextEditingController _nameController = TextEditingController();
-//   final TextEditingController _emailController = TextEditingController();
-//   final TextEditingController _commentsController = TextEditingController();
-//   int _rating = 0;
-//   int _hoverRating = 0;
-//   final Completer<GoogleMapController> _mapController = Completer();
-
-//   static const LatLng _laphicLocation = LatLng(0.2279, 32.5325);
-
-//   @override
-//   void initState() {
-//     super.initState();
-//   }
-
-//   @override
-//   void dispose() {
-//     _nameController.dispose();
-//     _emailController.dispose();
-//     _commentsController.dispose();
-//     super.dispose();
-//   }
-
-//   bool _isValidEmail(String email) {
-//     return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
-//   }
-
-//   void _submitFeedback() {
-//     if (_nameController.text.isEmpty || 
-//         _emailController.text.isEmpty || 
-//         _commentsController.text.isEmpty) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text('Please fill in all fields'), backgroundColor: Colors.red),
-//       );
-//       return;
-//     }
-
-//     if (!_isValidEmail(_emailController.text)) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text('Please enter a valid email'), backgroundColor: Colors.red),
-//       );
-//       return;
-//     }
-
-//     if (kDebugMode) {
-//       print('Feedback: Name: ${_nameController.text}, Email: ${_emailController.text}, Comments: ${_commentsController.text}, Rating: $_rating');
-//     }
-
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         content: const Text('Feedback submitted successfully!'),
-//         backgroundColor: Colors.green,
-//         action: SnackBarAction(label: 'OK', onPressed: () {}, textColor: Colors.white),
-//       ),
-//     );
-
-//     _nameController.clear();
-//     _emailController.clear();
-//     _commentsController.clear();
-//     setState(() => _rating = 0);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         color: const Color.fromARGB(255, 247, 248, 249),
-//         child: SingleChildScrollView(
-//           child: Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 _buildMap(),
-//                 const SizedBox(height: 20),
-//                 _buildContactInfo(),
-//                 const SizedBox(height: 30),
-//                 const Text(
-//                   'Inquiry / Feedback',
-//                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 202, 126, 4)),
-//                 ),
-//                 const SizedBox(height: 20),
-//                 _buildForm(),
-//                 const SizedBox(height: 20),
-//                 _buildRatingSection(),
-//                 const SizedBox(height: 30),
-//                 SizedBox(
-//                   width: double.infinity,
-//                   child: ElevatedButton(
-//                     onPressed: _submitFeedback,
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: Colors.orange,
-//                       padding: const EdgeInsets.symmetric(vertical: 15),
-//                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//                       elevation: 5,
-//                     ),
-//                     child: const Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildMap() {
-//     return SizedBox(
-//       height: 200,
-//       child: GoogleMap(
-//         onMapCreated: (GoogleMapController controller) {
-//           _mapController.complete(controller);
-//           if (kDebugMode) print('Map created successfully');
-//         },
-//         initialCameraPosition: const CameraPosition(
-//           target: _laphicLocation,
-//           zoom: 15,
-//         ),
-//         markers: {
-//           const Marker(
-//             markerId: MarkerId('laphic'),
-//             position: _laphicLocation,
-//             infoWindow: InfoWindow(title: 'Laphic Modern Homes'),
-//           ),
-//         },
-//       ),
-//     );
-//   }
-
-//   Widget _buildContactInfo() {
-//     return Card(
-//       child: Padding(
-//         padding: const EdgeInsets.all(12.0),
-//         child: Column(
-//           children: [
-//             _buildContactRow(Icons.location_pin, 'Kitende, Entebbe Road, Kampala, Uganda', const Color.fromARGB(255, 224, 141, 7)),
-//             const SizedBox(height: 10),
-//             _buildContactRow(Icons.phone, '+256 705029291', const Color.fromARGB(255, 231, 147, 4)),
-//             const SizedBox(height: 10),
-//             _buildContactRow(Icons.email, 'laphicmodernhomes@gmail.com', const Color.fromARGB(255, 198, 127, 19)),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildContactRow(IconData icon, String text, Color iconColor) {
-//     return Row(
-//       children: [
-//         Icon(icon, color: iconColor, size: 24),
-//         const SizedBox(width: 12),
-//         Expanded(child: Text(text, style: const TextStyle(fontSize: 16, color: Colors.black87))),
-//       ],
-//     );
-//   }
-
-//   Widget _buildForm() {
-//     return Column(
-//       children: [
-//         TextField(
-//           controller: _nameController,
-//           decoration: InputDecoration(
-//             labelText: 'Name',
-//             labelStyle: const TextStyle(color: Colors.white),
-//             filled: true,
-//             fillColor: Colors.white.withOpacity(0.2),
-//             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-//             focusedBorder: OutlineInputBorder(
-//               borderSide: const BorderSide(color: Colors.orange),
-//               borderRadius: BorderRadius.circular(10),
-//             ),
-//           ),
-//           style: const TextStyle(color: Colors.white),
-//         ),
-//         const SizedBox(height: 15),
-//         TextField(
-//           controller: _emailController,
-//           decoration: InputDecoration(
-//             labelText: 'Email',
-//             labelStyle: const TextStyle(color: Color.fromARGB(255, 32, 31, 31)),
-//             filled: true,
-//             fillColor: const Color.fromARGB(255, 27, 26, 26).withOpacity(0.2),
-//             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-//             focusedBorder: OutlineInputBorder(
-//               borderSide: const BorderSide(color: Colors.orange),
-//               borderRadius: BorderRadius.circular(10),
-//             ),
-//           ),
-//           style: const TextStyle(color: Color.fromARGB(255, 10, 10, 10)),
-//           keyboardType: TextInputType.emailAddress,
-//         ),
-//         const SizedBox(height: 15),
-//         TextField(
-//           controller: _commentsController,
-//           maxLines: 4,
-//           decoration: InputDecoration(
-//             labelText: 'Comments',
-//             labelStyle: const TextStyle(color: Color.fromARGB(255, 15, 15, 15)),
-//             filled: true,
-//             fillColor: Colors.white.withOpacity(0.2),
-//             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-//             focusedBorder: OutlineInputBorder(
-//               borderSide: const BorderSide(color: Colors.orange),
-//               borderRadius: BorderRadius.circular(10),
-//             ),
-//           ),
-//           style: const TextStyle(color: Colors.white),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildRatingSection() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         const Text(
-//           'Rate us:',
-//           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 189, 101, 7)),
-//         ),
-//         const SizedBox(height: 10),
-//         Row(
-//           children: List.generate(5, (index) {
-//             return GestureDetector(
-//               onTap: () => setState(() => _rating = index + 1),
-//               child: MouseRegion(
-//                 onEnter: (_) => setState(() => _hoverRating = index + 1),
-//                 onExit: (_) => setState(() => _hoverRating = 0),
-//                 child: AnimatedContainer(
-//                   duration: const Duration(milliseconds: 200),
-//                   child: Icon(
-//                     (index < _rating || index < _hoverRating) ? Icons.star : Icons.star_border,
-//                     color: Colors.orange,
-//                     size: 36,
-//                   ),
-//                 ),
-//               ),
-//             );
-//           }),
-//         ),
-//         if (_rating > 0) ...[
-//           const SizedBox(height: 10),
-//           Text(
-//             'You rated us $_rating star${_rating == 1 ? '' : 's'}!',
-//             style: const TextStyle(color: Color.fromARGB(234, 246, 244, 244), fontSize: 16),
-//           ),
-//         ],
-//       ],
-//     );
-//   }
-// }
-  
-
-  //  below is the  code for the feedback screen 
 
 import 'dart:async';
 import 'dart:io' show File;
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -642,93 +11,10 @@ import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:laphic_app/booking.dart';
+import 'package:laphic_app/profile_screen.dart';
 import 'package:laphic_app/projects_designn.dart';
 import 'package:laphic_app/services.dart';
-import 'package:laphic_app/login_screen.dart';
-
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _MainScreenState createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
-  bool _isLoading = true;
-
-  List<Widget> _pages = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _checkAuth();
-  }
-
-  Future<void> _checkAuth() async {
-    setState(() => _isLoading = true);
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user == null || !user.emailVerified) {
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoginScreen()),
-        );
-      }
-    } else {
-      setState(() {
-        _pages = [
-          const FeedbackInquiryScreen(),
-          const ServicesHomePage(),
-          const OngoingProjects(),
-          const BookingScreen(),
-          const FeedbackHistoryScreen(),
-        ];
-        _isLoading = false;
-      });
-    }
-  }
-
-  void _onItemTapped(int index) {
-    setState(() => _selectedIndex = index);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.orange))),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Laphic App', style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF8D5524),
-        elevation: 0,
-      ),
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey[400],
-        backgroundColor: const Color(0xFF080F2B),
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.feedback), label: "Feedback"),
-          BottomNavigationBarItem(icon: Icon(Icons.home_repair_service), label: "Services"),
-          BottomNavigationBarItem(icon: Icon(Icons.construction), label: "Projects"),
-          BottomNavigationBarItem(icon: Icon(Icons.book_online), label: "Booking"),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
-        ],
-      ),
-    );
-  }
-}
+import 'package:laphic_app/livechat.dart';
 
 class FeedbackInquiryScreen extends StatefulWidget {
   const FeedbackInquiryScreen({Key? key}) : super(key: key);
@@ -742,32 +28,86 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _commentsController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
   int _rating = 0;
   bool _isLoading = false;
   File? _image;
   PlatformFile? _webImage;
   final ImagePicker _picker = ImagePicker();
   final Completer<GoogleMapController> _mapController = Completer();
+  int _selectedIndex = 5; // Feedback screen index
 
-  static const LatLng _laphicLocation = LatLng(0.2279, 32.5325);
-  static const String _backendUrl = 'https://your-ngrok-url.ngrok.io'; // Replace with actual ngrok URL
+  static const LatLng _laphicLocation = LatLng(0.347596, 32.582520);
+  static const String _backendUrl = 'http://10.0.2.2:5000';
+
   static const String _mapStyle = '''
     [
-      {"elementType": "geometry", "stylers": [{"color": "#212121"}]},
-      {"elementType": "labels.text.fill", "stylers": [{"color": "#757575"}]},
-      {"elementType": "labels.text.stroke", "stylers": [{"color": "#212121"}]},
-      {"featureType": "road", "elementType": "geometry", "stylers": [{"color": "#424242"}]},
-      {"featureType": "water", "elementType": "geometry", "stylers": [{"color": "#1976D2"}]}
+      {
+        "featureType": "administrative",
+        "elementType": "geometry",
+        "stylers": [{"visibility": "on"}]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [{"visibility": "on"}]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{"color": "#ffffff"}, {"weight": 1.5}]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [{"color": "#76C8DA"}]
+      },
+      {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [{"color": "#F5F5F5"}]
+      }
     ]
   ''';
+
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  final List<String> _feedbackTypes = [
+    'General Feedback',
+    'Service Inquiry',
+    'Support Request',
+    'Suggestion'
+  ];
+  String _selectedFeedbackType = 'General Feedback';
+  final _formKey = GlobalKey<FormState>();
+  bool _isMapLoading = true;
 
   @override
   void initState() {
     super.initState();
+    _loadUserData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeMap();
+    });
+  }
+
+  Future<void> _initializeMap() async {
+    if (_mapController.isCompleted) return;
+    setState(() {
+      _isMapLoading = true;
+    });
+    if (kDebugMode) {
+      print('Initializing Google Map');
+    }
+  }
+
+  Future<void> _loadUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       _emailController.text = user.email ?? '';
       _nameController.text = user.displayName ?? '';
+      if (kDebugMode) {
+        print('Loaded user data: email=${user.email}, name=${user.displayName}');
+      }
     }
   }
 
@@ -776,6 +116,8 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _commentsController.dispose();
+    _subjectController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -784,15 +126,44 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
   }
 
   Future<void> _pickImage() async {
+    if (kDebugMode) {
+      print('Picking image...');
+    }
     if (kIsWeb) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
-      if (result != null && result.files.single.bytes != null) {
-        setState(() => _webImage = result.files.single);
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: false,
+      );
+      if (result != null && result.files.isNotEmpty) {
+        setState(() => _webImage = result.files.first);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Image selected successfully'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          ),
+        );
+        if (kDebugMode) {
+          print('Web image selected: ${_webImage!.name}');
+        }
       }
     } else {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+      );
       if (image != null) {
         setState(() => _image = File(image.path));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Image selected successfully'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          ),
+        );
+        if (kDebugMode) {
+          print('Mobile image selected: ${image.path}');
+        }
       }
     }
   }
@@ -802,18 +173,27 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
       try {
         User? user = FirebaseAuth.instance.currentUser;
         if (user == null) throw Exception('User not logged in');
+        final filename = '${user.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg';
         final ref = FirebaseStorage.instance
             .ref()
             .child('feedback_images')
-            .child('${user.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg');
-        await ref.putData(_webImage!.bytes!);
-        return await ref.getDownloadURL();
+            .child(filename);
+        await ref.putData(
+          _webImage!.bytes!,
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
+        final url = await ref.getDownloadURL();
+        if (kDebugMode) {
+          print('Web image uploaded: $url');
+        }
+        return url;
       } catch (e) {
+        if (kDebugMode) print('Image upload error: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to upload image: $e'),
+            content: Text('Failed to upload image: ${e.toString().split(']').last}'),
             backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
+            duration: const Duration(seconds: 3),
           ),
         );
         return null;
@@ -822,18 +202,27 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
       try {
         User? user = FirebaseAuth.instance.currentUser;
         if (user == null) throw Exception('User not logged in');
+        final filename = '${user.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg';
         final ref = FirebaseStorage.instance
             .ref()
             .child('feedback_images')
-            .child('${user.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg');
-        await ref.putFile(_image!);
-        return await ref.getDownloadURL();
+            .child(filename);
+        await ref.putFile(
+          _image!,
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
+        final url = await ref.getDownloadURL();
+        if (kDebugMode) {
+          print('Mobile image uploaded: $url');
+        }
+        return url;
       } catch (e) {
+        if (kDebugMode) print('Image upload error: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to upload image: $e'),
+            content: Text('Failed to upload image: ${e.toString().split(']').last}'),
             backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
+            duration: const Duration(seconds: 3),
           ),
         );
         return null;
@@ -842,31 +231,31 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
     return null;
   }
 
+  bool _validateFirstPage() {
+    if (!_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill all required fields correctly'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+
   Future<void> _submitFeedback() async {
     if (_isLoading) return;
 
     setState(() => _isLoading = true);
 
-    if (_nameController.text.trim().isEmpty ||
-        _emailController.text.trim().isEmpty ||
-        _commentsController.text.trim().isEmpty) {
+    if (_commentsController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please fill in all fields'),
+          content: Text('Please provide your feedback or inquiry'),
           backgroundColor: Colors.red,
-          duration: Duration(seconds: 5),
-        ),
-      );
-      setState(() => _isLoading = false);
-      return;
-    }
-
-    if (!_isValidEmail(_emailController.text.trim())) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter a valid email'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
         ),
       );
       setState(() => _isLoading = false);
@@ -878,19 +267,43 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
         const SnackBar(
           content: Text('Comments must be 500 characters or less'),
           backgroundColor: Colors.red,
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
         ),
       );
       setState(() => _isLoading = false);
       return;
     }
 
-    if (_rating == 0) {
+    if (_nameController.text.trim().length > 100) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please provide a rating'),
+          content: Text('Name must be 100 characters or less'),
           backgroundColor: Colors.red,
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      setState(() => _isLoading = false);
+      return;
+    }
+
+    if (_emailController.text.trim().length > 100) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email must be 100 characters or less'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
+      setState(() => _isLoading = false);
+      return;
+    }
+
+    if (_subjectController.text.trim().length > 100) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Subject must be 100 characters or less'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
         ),
       );
       setState(() => _isLoading = false);
@@ -900,37 +313,49 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
     try {
       String? imageUrl = await _uploadImage();
       User? user = FirebaseAuth.instance.currentUser;
+
       final response = await http.post(
-        Uri.parse('$_backendUrl/feedback/submit'),
+        Uri.parse('$_backendUrl/api/v1/feedback/submit'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'userId': user?.uid,
+          'userId': user?.uid ?? '',
           'name': _nameController.text.trim(),
           'email': _emailController.text.trim(),
+          'subject': _subjectController.text.trim(),
           'comment': _commentsController.text.trim(),
           'rating': _rating,
           'imageUrl': imageUrl,
+          'feedbackType': _selectedFeedbackType,
+          'timestamp': DateTime.now().toIso8601String(),
         }),
       );
 
       if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print('Feedback submitted successfully');
+        }
         _showSuccessDialog();
+        _clearForm();
       } else {
         final error = jsonDecode(response.body)['error'] ?? 'Failed to submit feedback';
+        if (kDebugMode) {
+          print('Feedback submission failed: $error');
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(error),
             backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
     } catch (e) {
+      if (kDebugMode) print('Feedback submission error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Connection error: $e'),
+          content: Text('Connection error: ${e.toString().split(']').last}'),
           backgroundColor: Colors.red,
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 3),
         ),
       );
     } finally {
@@ -938,138 +363,651 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
     }
   }
 
+  void _nextPage() {
+    if (_currentPage < 2) {
+      if (_currentPage == 0 && !_validateFirstPage()) {
+        return;
+      }
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      _submitFeedback();
+    }
+  }
+
+  void _previousPage() {
+    if (_currentPage > 0) {
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   void _clearForm() {
     _nameController.clear();
     _emailController.clear();
     _commentsController.clear();
+    _subjectController.clear();
     setState(() {
       _rating = 0;
       _image = null;
       _webImage = null;
+      _selectedFeedbackType = 'General Feedback';
+      _currentPage = 0;
+      _pageController.jumpToPage(0);
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Form cleared'),
-        backgroundColor: Colors.orange,
-        duration: Duration(seconds: 5),
-      ),
-    );
   }
 
   void _showSuccessDialog() {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Thank You!'),
-        content: const Text('Your feedback has been submitted successfully.'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        title: const Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.green, size: 28),
+            SizedBox(width: 10),
+            Text('Thank You!', style: TextStyle(color: Colors.orange))
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Your feedback has been submitted successfully.',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 15),
+            const Text(
+              'We appreciate your input and will get back to you if needed.',
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context); // Close dialog
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (_) => const ServicesHomePage()),
+                MaterialPageRoute(
+                  builder: (_) => const MainScreen(initialIndex: 1),
+                ),
               );
             },
-            child: const Text('Back to Services', style: TextStyle(color: Colors.orange)),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.orange,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            ),
+            child: const Text('Back to Services'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.orange,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            ),
+            child: const Text('Stay Here'),
           ),
         ],
       ),
     );
   }
 
+  void _onNavBarTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ProfilePage()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ServicesHomePage()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const OngoingProjects()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ChatPage()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const BookingScreen(
+              initialDesign: '',
+              initialServiceType: '',
+            ),
+          ),
+        );
+        break;
+      case 5:
+        // Already on FeedbackInquiryScreen
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     final isWide = screenWidth > 600;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF080F2B),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(isWide ? 32.0 : 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildMap(),
-              const SizedBox(height: 24),
-              _buildContactInfo(),
-              const SizedBox(height: 32),
-              Text(
-                'Share Your Feedback',
-                style: TextStyle(
-                  fontSize: isWide ? 28 : 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.orange,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        elevation: 0,
+        title: const Text(
+          'Feedback & Inquiries',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          _buildProgressIndicator(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(isWide ? 24.0 : 16.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: screenHeight * 0.7,
+                      child: PageView(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          _buildPersonalInfoPage(isWide),
+                          _buildFeedbackDetailsPage(isWide),
+                          _buildLocationContactPage(isWide),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildNavigationButtons(),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-              _buildForm(isWide),
-              const SizedBox(height: 24),
-              _buildRatingSection(),
-              const SizedBox(height: 24),
-              _buildImageUpload(),
-              const SizedBox(height: 32),
-              _buildActionButtons(),
-            ],
+            ),
           ),
-        ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        onTap: _onNavBarTap,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Services'),
+          BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Projects'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
+        ],
       ),
     );
   }
 
-  Widget _buildMap() {
-    if (kIsWeb) {
-      return const SizedBox(
-        height: 200,
-        child: Center(
-          child: Text(
-            'Map not supported on web yet',
-            style: TextStyle(color: Colors.white70, fontSize: 16),
+  Widget _buildProgressIndicator() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 1),
           ),
-        ),
-      );
-    }
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.25,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: GoogleMap(
-          onMapCreated: (GoogleMapController controller) {
-            _mapController.complete(controller);
-            controller.setMapStyle(_mapStyle);
-          },
-          initialCameraPosition: const CameraPosition(
-            target: _laphicLocation,
-            zoom: 15,
-          ),
-          markers: {
-            const Marker(
-              markerId: MarkerId('laphic'),
-              position: _laphicLocation,
-              infoWindow: InfoWindow(title: 'Laphic Modern Homes'),
-            ),
-          },
-          zoomControlsEnabled: true,
-          myLocationButtonEnabled: false,
-        ),
+        ],
       ),
+      child: Row(
+        children: [
+          _buildProgressStep(1, "Personal Info", _currentPage >= 0),
+          _buildProgressLine(_currentPage >= 1),
+          _buildProgressStep(2, "Your Feedback", _currentPage >= 1),
+          _buildProgressLine(_currentPage >= 2),
+          _buildProgressStep(3, "Location", _currentPage >= 2),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressStep(int step, String label, bool isActive) {
+    return Expanded(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isActive ? Colors.orange : Colors.grey.shade300,
+            ),
+            child: Center(
+              child: Text(
+                step.toString(),
+                style: TextStyle(
+                  color: isActive ? Colors.white : Colors.grey.shade600,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: isActive ? Colors.orange : Colors.grey.shade600,
+                fontSize: 12,
+                fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressLine(bool isActive) {
+    return Container(
+      width: 20,
+      height: 2,
+      color: isActive ? Colors.orange : Colors.grey.shade300,
+    );
+  }
+
+  Widget _buildPersonalInfoPage(bool isWide) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Tell us about yourself',
+            style: TextStyle(
+              fontSize: isWide ? 24 : 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.orange,
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: _nameController,
+            decoration: InputDecoration(
+              labelText: 'Full Name',
+              hintText: 'Enter your full name',
+              prefixIcon: const Icon(Icons.person, color: Colors.orange),
+              labelStyle: const TextStyle(color: Colors.black54),
+              filled: true,
+              fillColor: Colors.grey[100],
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.orange, width: 2),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.red, width: 1),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.red, width: 2),
+              ),
+            ),
+            style: const TextStyle(color: Colors.black87),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter your name';
+              }
+              if (value.trim().length > 100) {
+                return 'Name must be 100 characters or less';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _emailController,
+            decoration: InputDecoration(
+              labelText: 'Email Address',
+              hintText: 'Enter your email address',
+              prefixIcon: const Icon(Icons.email, color: Colors.orange),
+              labelStyle: const TextStyle(color: Colors.black54),
+              filled: true,
+              fillColor: Colors.grey[100],
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.orange, width: 2),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.red, width: 1),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.red, width: 2),
+              ),
+            ),
+            style: const TextStyle(color: Colors.black87),
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter your email';
+              }
+              if (!_isValidEmail(value.trim())) {
+                return 'Please enter a valid email address';
+              }
+              if (value.trim().length > 100) {
+                return 'Email must be 100 characters or less';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _subjectController,
+            decoration: InputDecoration(
+              labelText: 'Subject',
+              hintText: 'What is your feedback about?',
+              prefixIcon: const Icon(Icons.subject, color: Colors.orange),
+              labelStyle: const TextStyle(color: Colors.black54),
+              filled: true,
+              fillColor: Colors.grey[100],
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.orange, width: 2),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.red, width: 1),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.red, width: 2),
+              ),
+            ),
+            style: const TextStyle(color: Colors.black87),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter a subject';
+              }
+              if (value.trim().length > 100) {
+                return 'Subject must be 100 characters or less';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'Feedback Type',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.orange,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value:    	    
+                _selectedFeedbackType,
+                isExpanded: true,
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.orange),
+                items: _feedbackTypes.map((String type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedFeedbackType = newValue;
+                    });
+                  }
+                },
+                style: const TextStyle(color: Colors.black87, fontSize: 16),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeedbackDetailsPage(bool isWide) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Share Your Thoughts',
+          style: TextStyle(
+            fontSize: isWide ? 24 : 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.orange,
+          ),
+        ),
+        const SizedBox(height: 20),
+        TextFormField(
+          controller: _commentsController,
+          maxLines: 5,
+          maxLength: 500,
+          decoration: InputDecoration(
+            labelText: 'Your Feedback',
+            hintText: 'Please provide your detailed feedback or inquiry...',
+            alignLabelWithHint: true,
+            labelStyle: const TextStyle(color: Colors.black54),
+            filled: true,
+            fillColor: Colors.grey[100],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(color: Colors.grey[300]!),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.orange, width: 2),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.red, width: 1),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.red, width: 2),
+            ),
+          ),
+          style: const TextStyle(color: Colors.black87),
+        ),
+        const SizedBox(height: 20),
+        _buildRatingSection(),
+        const SizedBox(height: 20),
+        _buildImageUpload(),
+      ],
+    );
+  }
+
+  Widget _buildLocationContactPage(bool isWide) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Our Location',
+          style: TextStyle(
+            fontSize: isWide ? 24 : 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.orange,
+          ),
+        ),
+        const SizedBox(height: 20),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Stack(
+              children: [
+                GoogleMap(
+                  onMapCreated: (GoogleMapController controller) {
+                    _mapController.complete(controller);
+                    controller.setMapStyle(_mapStyle).catchError((e) {
+                      if (kDebugMode) print('Error setting map style: $e');
+                    });
+                    setState(() {
+                      _isMapLoading = false;
+                    });
+                    if (kDebugMode) {
+                      print('Map created successfully');
+                    }
+                  },
+                  initialCameraPosition: const CameraPosition(
+                    target: _laphicLocation,
+                    zoom: 15,
+                  ),
+                  markers: {
+                    const Marker(
+                      markerId: MarkerId('laphic'),
+                      position: _laphicLocation,
+                      infoWindow: InfoWindow(title: 'Laphic Modern Homes'),
+                    ),
+                  },
+                  zoomControlsEnabled: true,
+                  myLocationButtonEnabled: false,
+                  compassEnabled: true,
+                  mapToolbarEnabled: true,
+                ),
+                if (_isMapLoading)
+                  Container(
+                    color: Colors.grey[200],
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        _buildContactInfo(),
+      ],
     );
   }
 
   Widget _buildContactInfo() {
     return Card(
-      color: Colors.white.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildContactRow(Icons.location_pin, 'Kitende, Entebbe Road, Kampala, Uganda', Colors.orange),
-            const SizedBox(height: 12),
-            _buildContactRow(Icons.phone, '+256 705029291', Colors.orange),
-            const SizedBox(height: 12),
-            _buildContactRow(Icons.email, 'laphicmodernhomes@gmail.com', Colors.orange),
+            const Text(
+              'Contact Information',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildContactRow(
+              Icons.location_on,
+              'Kitende, Entebbe Road, Kampala, Uganda',
+              Colors.orange,
+            ),
+            const Divider(height: 24),
+            _buildContactRow(
+              Icons.phone,
+              '+256 705029291',
+              Colors.orange,
+            ),
+            const Divider(height: 24),
+            _buildContactRow(
+              Icons.email,
+              'laphicmodernhomes@gmail.com',
+              Colors.orange,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Business Hours: Monday - Friday, 8:00 AM - 6:00 PM',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
           ],
         ),
       ),
@@ -1079,129 +1017,89 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
   Widget _buildContactRow(IconData icon, String text, Color iconColor) {
     return Row(
       children: [
-        Icon(icon, color: iconColor, size: 24),
-        const SizedBox(width: 12),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: iconColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, color: iconColor, size: 22),
+        ),
+        const SizedBox(width: 16),
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 16, color: Colors.white70),
+            style: const TextStyle(fontSize: 16, color: Colors.black87),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildForm(bool isWide) {
-    return Column(
-      children: [
-        TextField(
-          controller: _nameController,
-          decoration: InputDecoration(
-            labelText: 'Name',
-            labelStyle: const TextStyle(color: Colors.white70),
-            filled: true,
-            fillColor: Colors.white.withOpacity(0.1),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.orange),
-            ),
-          ),
-          style: const TextStyle(color: Colors.white),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _emailController,
-          decoration: InputDecoration(
-            labelText: 'Email',
-            labelStyle: const TextStyle(color: Colors.white70),
-            filled: true,
-            fillColor: Colors.white.withOpacity(0.1),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.orange),
-            ),
-          ),
-          style: const TextStyle(color: Colors.white),
-          keyboardType: TextInputType.emailAddress,
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _commentsController,
-          maxLines: 4,
-          maxLength: 500,
-          decoration: InputDecoration(
-            labelText: 'Comments',
-            labelStyle: const TextStyle(color: Colors.white70),
-            filled: true,
-            fillColor: Colors.white.withOpacity(0.1),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.orange),
-            ),
-          ),
-          style: const TextStyle(color: Colors.white),
         ),
       ],
     );
   }
 
   Widget _buildRatingSection() {
+    String ratingText;
+    switch (_rating) {
+      case 1:
+        ratingText = 'Poor';
+        break;
+      case 2:
+        ratingText = 'Fair';
+        break;
+      case 3:
+        ratingText = 'Good';
+        break;
+      case 4:
+        ratingText = 'Very Good';
+        break;
+      case 5:
+        ratingText = 'Excellent';
+        break;
+      default:
+        ratingText = 'No Rating';
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Rate Us',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.orange),
+          'Rate Your Experience',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.orange,
+          ),
         ),
         const SizedBox(height: 12),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(5, (index) {
             return GestureDetector(
               onTap: () => setState(() => _rating = index + 1),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
-                padding: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Icon(
                   index < _rating ? Icons.star : Icons.star_border,
                   color: Colors.orange,
-                  size: 36,
+                  size: 40,
                 ),
               ),
             );
           }),
         ),
-        if (_rating > 0) ...[
-          const SizedBox(height: 12),
-          Text(
-            'You rated us $_rating star${_rating == 1 ? '' : 's'}!',
-            style: const TextStyle(color: Colors.white70, fontSize: 16),
+        const SizedBox(height: 12),
+        Center(
+          child: Text(
+            ratingText,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.black54,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ],
+        ),
       ],
     );
   }
@@ -1211,60 +1109,167 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Attach Image (Optional)',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.orange),
+          'Upload Image (Optional)',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.orange,
+          ),
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            ElevatedButton.icon(
-              onPressed: _isLoading ? null : _pickImage,
-              icon: const Icon(Icons.image, color: Colors.white),
-              label: const Text('Pick Image', style: TextStyle(color: Colors.white)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
-            const SizedBox(width: 16),
-            if (_image != null || _webImage != null)
-              Text(
-                'Image selected',
-                style: const TextStyle(color: Colors.white70, fontSize: 16),
-              ),
-          ],
+        Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            side: BorderSide(color: Colors.grey[300]!),
+          ),
+          child: Container(
+            height: 150,
+            width: double.infinity,
+            padding: const EdgeInsets.all(8),
+            child: _image != null || _webImage != null
+                ? Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: kIsWeb && _webImage != null
+                            ? Image.memory(
+                                _webImage!.bytes!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 134,
+                              )
+                            : Image.file(
+                                _image!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 134,
+                              ),
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _image = null;
+                              _webImage = null;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Image removed'),
+                                backgroundColor: Colors.orange,
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.image,
+                          color: Colors.grey[400],
+                          size: 40,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'No Image Selected',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+          ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildActionButtons() {
-    return Row(
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            onPressed: _isLoading ? null : _submitFeedback,
+        const SizedBox(height: 12),
+        Center(
+          child: ElevatedButton.icon(
+            onPressed: _pickImage,
+            icon: const Icon(Icons.upload),
+            label: const Text('Pick Image'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 5,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-            child: _isLoading
-                ? const CircularProgressIndicator(color: Colors.white)
-                : const Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),
           ),
         ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: OutlinedButton(
-            onPressed: _isLoading ? null : _clearForm,
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.orange),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ],
+    );
+  }
+
+  Widget _buildNavigationButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        if (_currentPage > 0)
+          Expanded(
+            child: OutlinedButton(
+              onPressed: _previousPage,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.orange,
+                side: const BorderSide(color: Colors.orange),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                'Previous',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
             ),
-            child: const Text('Clear Form', style: TextStyle(fontSize: 16, color: Colors.orange)),
+          )
+        else
+          const Spacer(),
+        const SizedBox(width: 12),
+        Expanded(
+          child: ElevatedButton(
+            onPressed: _isLoading ? null : _nextPage,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: _isLoading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                : Text(
+                    _currentPage == 2 ? 'Submit' : 'Next',
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
           ),
         ),
       ],
@@ -1272,125 +1277,101 @@ class _FeedbackInquiryScreenState extends State<FeedbackInquiryScreen> {
   }
 }
 
-class FeedbackHistoryScreen extends StatefulWidget {
-  const FeedbackHistoryScreen({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  final int initialIndex;
+  const MainScreen({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _FeedbackHistoryScreenState createState() => _FeedbackHistoryScreenState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _FeedbackHistoryScreenState extends State<FeedbackHistoryScreen> {
-  bool _isLoading = false;
-  List<dynamic> _feedbackList = [];
-  static const String _backendUrl = 'https://your-ngrok-url.ngrok.io'; // Replace with actual ngrok URL
+class _MainScreenState extends State<MainScreen> {
+  late int _selectedIndex;
 
   @override
   void initState() {
     super.initState();
-    _fetchFeedbackHistory();
+    _selectedIndex = widget.initialIndex;
   }
 
-  Future<void> _fetchFeedbackHistory() async {
-    setState(() => _isLoading = true);
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user == null) throw Exception('User not logged in');
-      final response = await http.get(
-        Uri.parse('$_backendUrl/feedback/history/${user.uid}'),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        setState(() {
-          _feedbackList = jsonDecode(response.body);
-          _isLoading = false;
-        });
-      } else {
-        throw Exception(jsonDecode(response.body)['error'] ?? 'Failed to fetch feedback');
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 5),
-        ),
-      );
-      setState(() => _isLoading = false);
+  void _onNavBarTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ProfilePage()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ServicesHomePage()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const OngoingProjects()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ChatPage()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const BookingScreen(
+              initialDesign: '',
+              initialServiceType: '',
+            ),
+          ),
+        );
+        break;
+      case 5:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const FeedbackInquiryScreen()),
+        );
+        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 230, 228, 227),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: Colors.orange))
-          : _feedbackList.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No feedback submitted yet',
-                    style: TextStyle(color: Colors.white70, fontSize: 18),
-                  ),
-                )
-              : RefreshIndicator(
-                  onRefresh: _fetchFeedbackHistory,
-                  color: Colors.orange,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _feedbackList.length,
-                    itemBuilder: (context, index) {
-                      final feedback = _feedbackList[index];
-                      return Card(
-                        color: Colors.white.withOpacity(0.1),
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                feedback['name'],
-                                style: const TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                feedback['email'],
-                                style: const TextStyle(color: Colors.white70, fontSize: 16),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                feedback['comment'],
-                                style: const TextStyle(color: Colors.white70, fontSize: 16),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: List.generate(5, (i) {
-                                  return Icon(
-                                    i < feedback['rating'] ? Icons.star : Icons.star_border,
-                                    color: Colors.orange,
-                                    size: 20,
-                                  );
-                                }),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Submitted: ${feedback['timestamp']}',
-                                style: const TextStyle(color: Colors.white70, fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+      appBar: AppBar(
+        title: const Text('Laphic Modern Homes'),
+        backgroundColor: Colors.orange,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Text(
+          'Welcome to ${_selectedIndex == 1 ? 'Services' : 'Home'}',
+          style: const TextStyle(fontSize: 24),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        onTap: _onNavBarTap,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Services'),
+          BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Projects'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
+        ],
+      ),
     );
   }
 }

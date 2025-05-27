@@ -31,7 +31,7 @@ class CompoundDetailsScreen extends StatelessWidget {
         nextScreen = const ServicesHomePage();
         break;
       case 3:
-        nextScreen = const BookingScreen();
+        nextScreen = const BookingScreen(initialDesign: '', initialServiceType: '',);
         break;
       case 4:
         nextScreen = const ProfilePage();
@@ -235,7 +235,7 @@ class CompoundDetailsScreen extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const BookingScreen()),
+              MaterialPageRoute(builder: (context) => const BookingScreen(initialDesign: '', initialServiceType: '',)),
             );
           },
           backgroundColor: Colors.orange,
@@ -249,12 +249,13 @@ class CompoundDetailsScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Booking'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Projects'),
-            BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
-          ],
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Services'),
+          BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Projects'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
+        ],
         ),
       ),
     );

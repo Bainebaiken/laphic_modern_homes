@@ -5,9 +5,9 @@ import 'package:laphic_app/booking.dart';
 import 'package:laphic_app/feedback.dart';
 import 'package:laphic_app/interior_detail.dart';
 import 'package:laphic_app/livechat.dart';
-import 'package:laphic_app/metal_fabrication.dart';
 import 'package:laphic_app/profile_screen.dart';
 import 'package:laphic_app/projects_designn.dart';
+import 'package:laphic_app/services.dart';
 
 
 class InteriorGalleryScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _InteriorGalleryScreenState extends State<InteriorGalleryScreen> {
   int _currentImageIndex = 0;
   Timer? _imageTimer;
   final PageController _pageController = PageController();
-  int _navIndex = 1; // Interior Gallery is index 1 (assuming after Metal Works)
+  final int _navIndex = 1; // Interior Gallery is index 1 (assuming after Metal Works)
 
   final List<String> carouselImages = [
     'assets/interior3.jpeg',
@@ -113,32 +113,29 @@ class _InteriorGalleryScreenState extends State<InteriorGalleryScreen> {
     super.dispose();
   }
 
-  void _onNavTap(int index) {
-    if (index == _navIndex) return;
-    setState(() {
-      _navIndex = index;
-    });
+  void _onNavTap(BuildContext context, int index) {
+    if (index == 1) return; // Stay on Interior Gallery
     Widget nextScreen;
     switch (index) {
       case 0:
-        nextScreen = const MetalFabricationPage();
-        break;
-      case 1:
-        nextScreen = const InteriorGalleryScreen();
-        break;
-      case 2:
-        nextScreen = const BookingScreen();
-        break;
-      case 3:
         nextScreen = const ProfilePage();
         break;
-      case 4:
-        nextScreen = const ChatPage();
+      case 1:
+        nextScreen = const ServicesHomePage();
         break;
-      case 5:
+      
+      case 2:
         nextScreen = const OngoingProjects();
         break;
-      case 6:
+      case 3:
+        nextScreen = const ChatPage();
+        break;
+          
+      case 4:
+        nextScreen = const BookingScreen(initialDesign: '', initialServiceType: '',);
+        break;
+        
+      case 5:
         nextScreen = const FeedbackInquiryScreen();
         break;
       default:
@@ -215,20 +212,19 @@ class _InteriorGalleryScreenState extends State<InteriorGalleryScreen> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _navIndex,
-          onTap: _onNavTap,
+        
           selectedItemColor: Colors.orange,
           unselectedItemColor: Colors.grey.shade600,
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.construction), label: 'Metal Works'),
-            BottomNavigationBarItem(icon: Icon(Icons.palette), label: 'Interior'),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Booking'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Projects'),
-            BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
-          ],
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Services'),
+          BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Projects'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
+        ],
         ),
       ),
     );

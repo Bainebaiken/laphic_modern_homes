@@ -3,7 +3,6 @@ import 'package:laphic_app/booking.dart';
 import 'package:laphic_app/feedback.dart';
 import 'package:laphic_app/livechat.dart';
 import 'package:laphic_app/profile_screen.dart';
-
 import 'package:laphic_app/projects_designn.dart';
 import 'package:laphic_app/services.dart';
 
@@ -16,19 +15,21 @@ class ProjectDetailsScreen extends StatelessWidget {
     Widget nextScreen;
     switch (index) {
       case 0:
-        nextScreen = const ServicesHomePage();
+        nextScreen = const ProfilePage();
         break;
       case 1:
-        nextScreen = const BookingScreen();
+        
+        nextScreen = const ServicesHomePage();
         break;
       case 2:
-        nextScreen = const ProfilePage();
+        nextScreen = const OngoingProjects();
+
         break;
       case 3:
         nextScreen = const ChatPage();
         break;
       case 4:
-        nextScreen = const OngoingProjects();
+        nextScreen = const BookingScreen(initialDesign: '', initialServiceType: '',);
         break;
       case 5:
         nextScreen = const FeedbackInquiryScreen();
@@ -126,13 +127,13 @@ class ProjectDetailsScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.build), label: 'Services'),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Booking'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Projects'),
-            BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
-          ],
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Services'),
+          BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Projects'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
+        ],
         ),
       ),
     );
